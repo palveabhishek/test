@@ -1,0 +1,82 @@
+intro
+-Good morning,
+I am Abhishek Balkrishna palve, 
+I did my engineering from Mumbai university.
+After that i got a chance to work as a python data scientist in “abc company”,
+during this 1 year of service I was involved in Python, machine learning, Data science along with SQL. 
+I was involved in requirement analysis,programming,unit testing,defect fix,client interacton.
+
+sql role in data science
+-SQL is a special-purpose programming language for managing data held in relational database management systems. 
+Almost all structured data is stored in such databases, so, if you want to play with data, 
+chances are you'll want to know some SQL.
+
+diff betwnn list and tuple
+-The primary difference between tuples and lists is that tuples are immutable as opposed to lists which are mutable. 
+Therefore, it is possible to change a list but not a tuple.
+The contents of a tuple cannot change once they have been created in Python due to the immutability of tuples.
+
+diff between and  ani  &
+-Both of these are the expressions that we use in the Python language, 
+but there is a fundamental difference between ‘and’ and ‘&’ in Python. 
+The ‘and’ expression tests if both the expressions used are True (logically). The ‘&’ expression, 
+on the other hand (when used with False/ True values), tests if both of these are True.
+
+ordered data type?
+-ordered means that the items have a defined order, and that order will not change. 
+If you add new items to a list, the new items will be placed at the end of the list.
+order data types:- list, tuple, dict.
+
+unordered data types?
+-unordered means that the items dont have a defined order.
+unordered data types:- set. dict is unordered till python 3.6version.
+
+membership operator
+-We use membership operators to check whether a value or variable exists in a sequence or not in string, list, tuples, sets, dictionary.
+operator:- in, not in
+
+which loop to use if we want to check more than 2 condition
+-if-else-ladder(elif) is use if more than 2 conditions.
+
+when to use  for loop?
+-A "For" Loop is used to repeat a specific block of code a known number of times. 
+For example, if we want to check the grade of every student in the class, we loop from 1 to that number. 
+When the number of times is not known before hand, we use a "While" loop.
+
+logical operator?
+-AND--> 2 condition true o/p is 1
+OR--> 1 condition true o/p is 1
+NOT--> if 0 then 1, 1 then 0
+
+in string if we want first alphabet capital
+- use capitalize.
+-upper--> to make all capitale
+-lower--> to make all lower
+
+how to remove duplicate element?
+-by using set datat type.
+
+remove pop and discard difference?
+-remove--> hard delete- if element present then delete otherwise key error.
+ discard--> soft delete- if element present then delete otherwise skip.
+ pop--> use to delete element randomly.
+
+python cases?
+-pascal--> 1st and middle capital->GPay, YouTube
+ camel--> 1st small, middle capital-> iPhone, eBay
+ snake--> connect word with'_'->id_name
+
+Advantages of python
+-It's Simple.
+It's Free.
+It's Easy to Use.
+It's Highly Compatible.
+It is Object-Oriented.
+It has Lots of Libraries.
+It has Built-in Data Structures.
+It's Widely Applicable.
+
+disadvantages of python
+-if you write code in old version and want to run in new it wil not work(back word compatibility).
+we can't develope mobile applicati9on
+
