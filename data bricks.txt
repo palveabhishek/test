@@ -1,0 +1,583 @@
+#data bricks
+
+
+# File location and type
+file_location = "/FileStore/tables/movies_data.csv"
+file_type = "csv"
+ 
+# CSV options
+infer_schema = "false"
+first_row_is_header = "true"
+delimiter = ","
+ 
+# The applied options are for CSV files. For other file types, these will be ignored.
+df = spark.read.format(file_type) \
+  .option("inferSchema", infer_schema) \
+  .option("header", first_row_is_header) \
+  .option("sep", delimiter) \
+  .load(file_location)
+ 
+display(df)
+Table
+ 
+star_rating
+title
+content_rating
+genre
+duration
+actors_list
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+9.3
+The Shawshank Redemption
+R
+Crime
+142
+[u'Tim Robbins', u'Morgan Freeman', u'Bob Gunton']
+9.2
+The Godfather
+R
+Crime
+175
+[u'Marlon Brando', u'Al Pacino', u'James Caan']
+9.1
+The Godfather: Part II
+R
+Crime
+200
+[u'Al Pacino', u'Robert De Niro', u'Robert Duvall']
+9
+The Dark Knight
+PG-13
+Action
+152
+[u'Christian Bale', u'Heath Ledger', u'Aaron Eckhart']
+8.9
+Pulp Fiction
+R
+Crime
+154
+[u'John Travolta', u'Uma Thurman', u'Samuel L. Jackson']
+8.9
+12 Angry Men
+NOT RATED
+Drama
+96
+[u'Henry Fonda', u'Lee J. Cobb', u'Martin Balsam']
+8.9
+The Good, the Bad and the Ugly
+NOT RATED
+Western
+161
+[u'Clint Eastwood', u'Eli Wallach', u'Lee Van Cleef']
+8.9
+The Lord of the Rings: The Return of the King
+PG-13
+Adventure
+201
+[u'Elijah Wood', u'Viggo Mortensen', u'Ian McKellen']
+8.9
+Schindler's List
+R
+Biography
+195
+[u'Liam Neeson', u'Ralph Fiennes', u'Ben Kingsley']
+8.9
+Fight Club
+R
+Drama
+139
+[u'Brad Pitt', u'Edward Norton', u'Helena Bonham Carter']
+8.8
+The Lord of the Rings: The Fellowship of the Ring
+PG-13
+Adventure
+178
+[u'Elijah Wood', u'Ian McKellen', u'Orlando Bloom']
+8.8
+Inception
+PG-13
+Action
+148
+[u'Leonardo DiCaprio', u'Joseph Gordon-Levitt', u'Ellen Page']
+8.8
+Star Wars: Episode V - The Empire Strikes Back
+PG
+Action
+124
+[u'Mark Hamill', u'Harrison Ford', u'Carrie Fisher']
+8.8
+Forrest Gump
+PG-13
+Drama
+142
+[u'Tom Hanks', u'Robin Wright', u'Gary Sinise']
+8.8
+The Lord of the Rings: The Two Towers
+PG-13
+Adventure
+179
+[u'Elijah Wood', u'Ian McKellen', u'Viggo Mortensen']
+8.7
+Interstellar
+PG-13
+Adventure
+169
+[u'Matthew McConaughey', u'Anne Hathaway', u'Jessica Chastain']
+8.7
+One Flew Over the Cuckoo's Nest
+R
+Drama
+133
+[u'Jack Nicholson', u'Louise Fletcher', u'Michael Berryman']
+Showing all 979 rows.
+# Create a view or table
+ 
+temp_table_name = "movies_data_csv"
+ 
+df.createOrReplaceTempView(temp_table_name)
+%sql
+ 
+/* Query the created temp table in a SQL cell */
+ 
+select title from `movies_data_csv`
+Table
+ 
+title
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+The Shawshank Redemption
+The Godfather
+The Godfather: Part II
+The Dark Knight
+Pulp Fiction
+12 Angry Men
+The Good, the Bad and the Ugly
+The Lord of the Rings: The Return of the King
+Schindler's List
+Fight Club
+The Lord of the Rings: The Fellowship of the Ring
+Inception
+Star Wars: Episode V - The Empire Strikes Back
+Forrest Gump
+The Lord of the Rings: The Two Towers
+Interstellar
+One Flew Over the Cuckoo's Nest
+Showing all 979 rows.
+# With this registered as a temp view, it will only be available to this particular notebook. If you'd like other users to be able to query this table, you can also create a table from the DataFrame.
+# Once saved, this table will persist across cluster restarts as well as allow various users across different notebooks to query this data.
+# To do so, choose your table name and uncomment the bottom line.
+ 
+permanent_table_name = "movies_data_csv"
+ 
+df.write.format("parquet").saveAsTable(permanent_table_name)
+%sql
+select * from `movies_data_csv` where duration > 120
+Table
+ 
+star_rating
+title
+content_rating
+genre
+duration
+actors_list
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+9.3
+The Shawshank Redemption
+R
+Crime
+142
+[u'Tim Robbins', u'Morgan Freeman', u'Bob Gunton']
+9.2
+The Godfather
+R
+Crime
+175
+[u'Marlon Brando', u'Al Pacino', u'James Caan']
+9.1
+The Godfather: Part II
+R
+Crime
+200
+[u'Al Pacino', u'Robert De Niro', u'Robert Duvall']
+9
+The Dark Knight
+PG-13
+Action
+152
+[u'Christian Bale', u'Heath Ledger', u'Aaron Eckhart']
+8.9
+Pulp Fiction
+R
+Crime
+154
+[u'John Travolta', u'Uma Thurman', u'Samuel L. Jackson']
+8.9
+The Good, the Bad and the Ugly
+NOT RATED
+Western
+161
+[u'Clint Eastwood', u'Eli Wallach', u'Lee Van Cleef']
+8.9
+The Lord of the Rings: The Return of the King
+PG-13
+Adventure
+201
+[u'Elijah Wood', u'Viggo Mortensen', u'Ian McKellen']
+8.9
+Schindler's List
+R
+Biography
+195
+[u'Liam Neeson', u'Ralph Fiennes', u'Ben Kingsley']
+8.9
+Fight Club
+R
+Drama
+139
+[u'Brad Pitt', u'Edward Norton', u'Helena Bonham Carter']
+8.8
+The Lord of the Rings: The Fellowship of the Ring
+PG-13
+Adventure
+178
+[u'Elijah Wood', u'Ian McKellen', u'Orlando Bloom']
+8.8
+Inception
+PG-13
+Action
+148
+[u'Leonardo DiCaprio', u'Joseph Gordon-Levitt', u'Ellen Page']
+8.8
+Star Wars: Episode V - The Empire Strikes Back
+PG
+Action
+124
+[u'Mark Hamill', u'Harrison Ford', u'Carrie Fisher']
+8.8
+Forrest Gump
+PG-13
+Drama
+142
+[u'Tom Hanks', u'Robin Wright', u'Gary Sinise']
+8.8
+The Lord of the Rings: The Two Towers
+PG-13
+Adventure
+179
+[u'Elijah Wood', u'Ian McKellen', u'Viggo Mortensen']
+8.7
+Interstellar
+PG-13
+Adventure
+169
+[u'Matthew McConaughey', u'Anne Hathaway', u'Jessica Chastain']
+8.7
+One Flew Over the Cuckoo's Nest
+R
+Drama
+133
+[u'Jack Nicholson', u'Louise Fletcher', u'Michael Berryman']
+8.7
+Seven Samurai
+UNRATED
+Drama
+207
+[u'Toshir\xf4 Mifune', u'Takashi Shimura', u'Keiko Tsushima']
+Showing all 436 rows.
+import pyspark
+from pyspark.sql import SparkSession, Row
+from pyspark.sql.types import StructType,StructField, StringType, IntegerType
+from pyspark.sql.functions import *
+spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
+ 
+ 
+columns = ["language","users_count"]
+data = [("Java", "20000"), ("Python", "100000"), ("Scala", "3000")]
+ 
+ 
+rdd = spark.sparkContext.parallelize(data)
+ 
+dfFromRDD1 = rdd.toDF(columns)
+dfFromRDD1.printSchema()
+root
+ |-- language: string (nullable = true)
+ |-- users_count: string (nullable = true)
+
+print(dfFromRDD1.show())
++--------+-----------+
+|language|users_count|
++--------+-----------+
+|    Java|      20000|
+|  Python|     100000|
+|   Scala|       3000|
++--------+-----------+
+
+None
+dataDictionary = [
+        ('James',{'hair':'black','eye':'brown'}),
+        ('Michael',{'hair':'brown','eye':None}),
+        ('Robert',{'hair':'red','eye':'black'}),
+        ('Washington',{'hair':'grey','eye':'grey'}),
+        ('Jefferson',{'hair':'brown','eye':''})
+        ]
+ 
+df = spark.createDataFrame(data=dataDictionary, schema = ['name','properties'])
+df.printSchema()
+df.show()
+root
+ |-- name: string (nullable = true)
+ |-- properties: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: string (valueContainsNull = true)
+
++----------+--------------------+
+|      name|          properties|
++----------+--------------------+
+|     James|{eye -> brown, ha...|
+|   Michael|{eye -> null, hai...|
+|    Robert|{eye -> black, ha...|
+|Washington|{eye -> grey, hai...|
+| Jefferson|{eye -> , hair ->...|
++----------+--------------------+
+
+dept = [("Finance",10), 
+        ("Marketing",20), 
+        ("Sales",30), 
+        ("IT",40) 
+      ]
+rdd = spark.sparkContext.parallelize(dept)
+ 
+df = rdd.toDF()
+df.printSchema()
+df.show()
+root
+ |-- _1: string (nullable = true)
+ |-- _2: long (nullable = true)
+
++---------+---+
+|       _1| _2|
++---------+---+
+|  Finance| 10|
+|Marketing| 20|
+|    Sales| 30|
+|       IT| 40|
++---------+---+
+
+ 
+deptColumns = ["dept_name","dept_id"]
+df2 = rdd.toDF(deptColumns)
+df2.printSchema()
+df2.show(truncate=False)
+ 
+deptDF = spark.createDataFrame(data=dept, schema = deptColumns)
+deptDF.printSchema()
+deptDF.show(truncate=False)
+ 
+ 
+from pyspark.sql.types import StructType,StructField, StringType
+deptSchema = StructType([       
+    StructField('dept_name', StringType(), True),
+    StructField('dept_id', StringType(), True)
+])
+ 
+ 
+rdd = spark.sparkContext.parallelize([1,2,3,54,7,4,78,4,7,],15)
+rdd.take(15)
+Out[36]: [1, 2, 3, 54, 7, 4, 78, 4, 7]
+dataDF = [('James','1991-04-01','M',3000),
+  ('Michael','2000-05-19','M',4000),
+  ('Robert','1978-09-05','M',4000),
+  ('Maria','1967-12-01','F',4000),
+  ('Jen','1980-02-17','F',-1)
+]
+ 
+schema = StructType([
+         StructField('name',  StringType(), True),
+         StructField('dob', StringType(), True),
+         StructField('gender', StringType(), True),
+         StructField('salary', IntegerType(), True)
+         ])
+ 
+ 
+df = spark.createDataFrame(data = dataDF, schema = schema)
+df.printSchema()
+root
+ |-- name: string (nullable = true)
+ |-- dob: string (nullable = true)
+ |-- gender: string (nullable = true)
+ |-- salary: integer (nullable = true)
+
+df.show()
++-------+----------+---+------+
+|   name|       dob|gen|salary|
++-------+----------+---+------+
+|  James|1991-04-01|  M|  3000|
+|Michael|2000-05-19|  M|  4000|
+| Robert|1978-09-05|  M|  4000|
+|  Maria|1967-12-01|  F|  4000|
+|    Jen|1980-02-17|  F|    -1|
++-------+----------+---+------+
+
+df.select('name').show()
++--------------------+
+|                name|
++--------------------+
+|    {James, , Smith}|
+|   {Michael, Rose, }|
+|{Robert, , Williams}|
+|{Maria, Anne, Jones}|
+|  {Jen, Mary, Brown}|
++--------------------+
+
+spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
+ 
+data = [('James','Smith','M',3000),('Anna','Rose','F',4100),
+  ('Robert','Williams','NA',6200),(None,'Rob','F',6200)
+  
+]
+ 
+columns = ["firstname","lastname","gender","salary"]
+df = spark.createDataFrame(data=data, schema = columns)
+df.show()
+ 
+ 
++---------+--------+------+------+
+|firstname|lastname|gender|salary|
++---------+--------+------+------+
+|    James|   Smith|     M|  3000|
+|     Anna|    Rose|     F|  4100|
+|   Robert|Williams|    NA|  6200|
+|     null|     Rob|     F|  6200|
++---------+--------+------+------+
+
+df2=df.withColumn("salary", df.salary*3)
+df2.show()
++---------+--------+------+------+
+|firstname|lastname|gender|salary|
++---------+--------+------+------+
+|    James|   Smith|     M|  9000|
+|     Anna|    Rose|     F| 12300|
+|   Robert|Williams|    NA| 18600|
+|     null|     Rob|     F| 18600|
++---------+--------+------+------+
+
+from pyspark.sql.functions import when
+df3 = df.withColumn("gender", when(df.gender == "M",1) \
+      .when(df.gender == "F",2) \
+      .otherwise(df.gender))
+df3.show()
++---------+--------+------+------+
+|firstname|lastname|gender|salary|
++---------+--------+------+------+
+|    James|   Smith|     1|  3000|
+|     Anna|    Rose|     2|  4100|
+|   Robert|Williams|    NA|  6200|
+|     null|     Rob|     2|  6200|
++---------+--------+------+------+
+
+print(df.gender=='M')
+Column<'(gender = M)'>
+ 
+df4=df.withColumn("salary",df.salary.cast("String"))
+df4.printSchema()
+ 
+df.createOrReplaceTempView("PER")
+df5=spark.sql("select firstname from PER")
+df5.show()
+root
+ |-- firstname: string (nullable = true)
+ |-- lastname: string (nullable = true)
+ |-- gender: string (nullable = true)
+ |-- salary: string (nullable = true)
+
++---------+
+|firstname|
++---------+
+|    James|
+|     Anna|
+|   Robert|
+|     null|
++---------+
+
+df1 = df.withColumn('salary',df.salary.cast("String"))
+df1.printSchema()
+root
+ |-- firstname: string (nullable = true)
+ |-- lastname: string (nullable = true)
+ |-- gender: string (nullable = true)
+ |-- salary: string (nullable = true)
+
+1.StructType
+2.cast
+spark.sql("select salary from PER").show()
++------+
+|salary|
++------+
+|  3000|
+|  4100|
+|  6200|
+|  6200|
++------+
+
+df -- view 
+ 
+window function 
+ 
+ 
+aggreate  
+ 
+ord 
+rank 
+ 
+100 interview
+30 D
+ 
+ 
+ 
